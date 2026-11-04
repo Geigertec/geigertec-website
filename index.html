@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GeigerTec Machine Solutions | CNC Workholding, Training &amp; Consulting</title>
+<meta name="description" content="GeigerTec Machine Solutions: high-density compact CNC workholding for 3-axis, 4th-axis, 5-axis and automated workcells, plus hands-on Haas CNC training and on-site machining consulting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111111; --panel:#1a1a1a; --panel2:#222222; --line:#333333;
+    --text:#f2f2f2; --muted:#a3a3a3; --accent:#d2232a; --accent2:#ff4d52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:Inter,system-ui,sans-serif; font-size:18px; line-height:1.5;
+    -webkit-tap-highlight-color:transparent; user-select:none;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    display:flex; flex-direction:column; overflow:hidden;
+    background-image:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  h1,h2,h3,.tab,.btn,.stat b{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.02em}
+  .mono{font-family:"JetBrains Mono",monospace}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:4px solid var(--accent);background:#0a0a0a}
+  .brand img{height:72px;width:auto;display:block}
+  .division{text-align:right}
+  .dname{font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:30px;text-transform:uppercase;letter-spacing:.03em;line-height:1}
+  .dname span{color:var(--accent2)}
+  .tagline{margin-top:6px;color:var(--muted);font-size:14px;font-family:"JetBrains Mono",monospace;letter-spacing:.04em}
+
+  main{flex:1;position:relative;overflow:hidden}
+  .view{position:absolute;inset:0;padding:32px 40px 40px;overflow-y:auto;opacity:0;transform:translateX(30px);transition:opacity .45s,transform .45s;pointer-events:none;-webkit-overflow-scrolling:touch}
+  .view.on{opacity:1;transform:none;pointer-events:auto}
+
+  .kicker{color:var(--accent2);font-family:"JetBrains Mono",monospace;font-weight:700;font-size:16px;letter-spacing:.14em;text-transform:uppercase}
+  .welcome{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(17px,1.85vw,23px);line-height:1.15;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .welcome span{color:var(--accent2)}
+  .kicker::before{content:"// ";color:var(--muted)}
+  h1{font-size:clamp(34px,4.3vw,58px);line-height:.95;font-weight:800;margin:8px 0 18px}
+  h1 em{font-style:normal;color:var(--accent)}
+  h2{font-size:clamp(36px,4.4vw,56px);line-height:1;font-weight:800;margin:6px 0 12px}
+  h3{font-size:25px;font-weight:700;margin-bottom:6px;line-height:1.1}
+  .lead{font-size:20px;color:#cfcfcf;max-width:860px}
+
+  /* photos */
+  .photo{display:block;width:100%;height:100%;object-fit:cover;cursor:zoom-in;background:#000}
+  .frame{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .tag{position:absolute;left:12px;bottom:12px;background:rgba(10,10,10,.82);border-left:3px solid var(--accent);padding:6px 12px;font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;pointer-events:none}
+  .live{position:absolute;left:12px;top:12px;background:var(--accent);color:#fff;font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:4px;display:flex;align-items:center;gap:6px}
+  .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1.2s infinite}
+  @keyframes blink{50%{opacity:.2}}
+  video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+
+  /* home */
+  .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center;min-height:100%}
+  .hero-media{display:grid;grid-template-columns:1fr 1fr;gap:12px;height:min(66vh,620px)}
+  .hero-media .frame:first-child{grid-row:span 2}
+  .stats{display:grid;grid-template-columns:auto auto auto;justify-content:start;gap:10px;margin-top:20px}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:10px 12px}
+  .stat b{display:block;font-size:20px;white-space:nowrap;color:#fff;line-height:1}
+  .stat small{color:var(--muted);font-size:13px;white-space:nowrap}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-weight:800;font-size:24px;border:0;border-radius:12px;padding:15px 28px;margin-top:26px;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--text);border:2px solid var(--line);margin-left:12px}
+  .btn:active{transform:scale(.97)}
+
+  /* cards with photos */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .card .pic{aspect-ratio:4/3;overflow:hidden;border-bottom:3px solid var(--accent)}
+  .card .body{padding:18px 20px 20px}
+  .card p{color:var(--muted);font-size:16px}
+
+  .strip{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+  .strip .frame{aspect-ratio:4/3}
+  .vids{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  .vids .frame{aspect-ratio:4/5}
+  @media (max-width:900px){.vids{grid-template-columns:repeat(2,1fr)}}
+  .hint{color:var(--muted);font-size:14px;margin-top:10px}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:22px;align-items:start}
+  ul.checks{list-style:none;margin-top:8px}
+  ul.checks li{padding:11px 0 11px 38px;border-bottom:1px solid var(--line);position:relative;font-size:18px}
+  ul.checks li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:18px;background:var(--accent);
+    -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>') center/contain no-repeat;
+            mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>') center/contain no-repeat}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+
+  /* automation */
+  .auto{display:grid;grid-template-columns:1.1fr .55fr 1fr;gap:16px;margin-top:22px;height:min(58vh,560px)}
+  .auto .col{display:grid;gap:16px;grid-template-rows:1fr 1fr;min-height:0}
+  .auto>*,.auto .col>*{min-height:0;height:100%}
+  .hero-media>*{min-height:0}
+
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pair .frame{aspect-ratio:16/10}
+
+  /* contact */
+  .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start;margin-top:20px}
+  .contact-line{display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font-size:22px}
+  .contact-line svg{width:30px;height:30px;color:var(--accent);flex:none}
+  .contact-line small{display:block;color:var(--muted);font-size:14px;text-transform:uppercase;letter-spacing:.08em}
+  .offer{background:linear-gradient(135deg,#2e1112,#1a1a1a);border:1px solid #6b1a1d;border-radius:16px;padding:28px}
+  .offer h3{color:#fff;font-size:32px}
+
+  nav{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);background:#0a0a0a}
+  .tab{background:none;border:0;color:var(--muted);font-size:19px;font-weight:700;padding:16px 4px 18px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .tab svg{width:28px;height:28px}
+  .tab.on{color:var(--text)}
+  .tab.on::before{content:"";position:absolute;top:0;left:18%;right:18%;height:4px;background:var(--accent);border-radius:0 0 4px 4px}
+
+  .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0;opacity:.8}
+  .foot{color:#5f5f5f;font-size:12px;margin-top:30px}
+
+
+  /* shop */
+  .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+  .prod{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left;color:inherit;font:inherit;padding:0;transition:transform .15s,border-color .15s}
+  .prod:active{transform:scale(.98)}
+  .prod:hover{border-color:var(--accent)}
+  .prod .art{aspect-ratio:16/10;background:radial-gradient(circle at 50% 40%,#2a2a2a,#151515);display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--accent);position:relative}
+  .prod .art svg{width:92%;height:92%}
+  .soon{position:absolute;top:12px;right:12px;background:var(--accent);color:#fff;font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;letter-spacing:.1em;padding:5px 10px;border-radius:4px;text-transform:uppercase}
+  .prod .body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+  .prod p{color:var(--muted);font-size:16px;flex:1}
+  .prod .more{margin-top:14px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;color:var(--accent2)}
+  .sample{display:inline-block;margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);border:1px dashed var(--line);padding:6px 12px;border-radius:6px}
+
+  .detail{display:none}
+  .detail.on{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;margin-top:10px}
+  .detail .art{aspect-ratio:4/3;background:radial-gradient(circle at 50% 40%,#2a2a2a,#151515);border:1px solid var(--line);border-radius:16px;display:flex;align-items:center;justify-content:center;position:relative}
+  .detail .art svg{width:92%;height:92%}
+  .back{background:none;border:2px solid var(--line);color:var(--text);font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:20px;text-transform:uppercase;padding:10px 20px;border-radius:10px;cursor:pointer;margin-bottom:18px}
+  .price{display:flex;align-items:center;gap:14px;margin:16px 0 6px}
+  .price b{font-family:"Barlow Condensed",sans-serif;font-size:34px;color:var(--muted);text-transform:uppercase}
+  .cs-box{background:linear-gradient(135deg,#2e1112,#1a1a1a);border:1px solid #6b1a1d;border-radius:14px;padding:18px 20px;margin-top:20px}
+  .cs-box h3{font-size:26px}
+  .cs-box p{color:#d9cfcf;font-size:16px}
+  .btn.disabled{background:#3a3a3a;color:#9a9a9a;cursor:default}
+  @media (max-width:900px){.shop-grid{grid-template-columns:repeat(2,1fr)}.detail.on{grid-template-columns:1fr}}
+
+  .art-pic{background:radial-gradient(circle at 50% 40%,#2a2a2a,#151515);display:flex;align-items:center;justify-content:center}
+  .art-pic svg{width:86%;height:86%}
+  #v-consulting .grid{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:900px){#v-consulting .grid{grid-template-columns:repeat(2,1fr)}}
+  .prodimg{background:radial-gradient(circle at 50% 45%,#4a4a4a 0%,#2a2a2a 45%,#161616 80%)!important}
+  .prodimg img{position:absolute;inset:0;margin:auto;max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.6)) drop-shadow(0 0 1px rgba(255,255,255,.35))}
+  .detail .prodimg img{max-width:78%;max-height:80%}
+  /* lightbox */
+  #lb{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;z-index:50;padding:30px}
+  #lb.on{display:flex}
+  #lb img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  #lb .x{position:absolute;top:18px;right:22px;font-size:40px;color:#fff;background:var(--accent);width:56px;height:56px;border-radius:50%;border:0;line-height:1;cursor:pointer}
+
+  @media (max-width:900px){
+    .hero,.split,.contact,.auto{grid-template-columns:1fr;height:auto}
+    .hero-media{height:70vh}
+    .auto .col{grid-template-rows:none}
+    .auto .frame{aspect-ratio:4/3}
+    .strip{grid-template-columns:repeat(2,1fr)}
+    .view{padding:24px 20px}
+    .tab{font-size:14px}.tab svg{width:24px;height:24px}
+    header{padding:10px 18px}.tagline{display:none}.dname{font-size:22px}.brand img{height:56px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><img src="img/logo.png" alt="GeigerTec Machine"></div>
+  <div class="division"><div class="dname">GeigerTec <span>Machine Solutions</span></div><div class="tagline">Workholding · Training · Consulting</div></div>
+</header>
+
+<main id="main">
+
+  <!-- HOME -->
+  <section class="view on" id="v-home">
+    <div class="hero">
+      <div>
+        <div class="welcome">Welcome to <span>GeigerTec Machine Solutions</span></div>
+        <h1>High-density compact <em>workholding</em> built for <span style="white-space:nowrap">lights-out</span> <span style="white-space:nowrap">5-axis.</span></h1>
+        <p class="lead">Low-profile tombstones, vises and fixture plates that fit your CNC machine or automated workcell and clear the 5-axis envelope. Proven every day in our own lights-out production.</p>
+        <div class="stats">
+          <div class="stat"><b>Shop-Proven</b><small>Running lights-out daily</small></div>
+          <div class="stat"><b>Automation-Ready</b><small>For automated cells</small></div>
+          <div class="stat"><b>Multi-Part</b><small>More parts per setup</small></div>
+        </div>
+        <button class="btn" data-go="workholding">See the solutions →</button>
+        <button class="btn ghost" data-go="training">Training</button>
+      </div>
+      <div class="hero-media">
+        <div class="frame">
+          <video src="img/pool-walk.mp4" poster="img/pool-walk.jpg" autoplay muted loop playsinline preload="auto"></video>
+          <span class="live">Running</span>
+        </div>
+        <div class="frame"><img class="photo" src="img/red-tombstone.jpg" alt="Hex tombstone with four compact vises"></div>
+        <div class="frame"><img class="photo" src="img/plates-in-machine.jpg" alt="Fixture plates and tombstone loaded in the machine"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKHOLDING -->
+  <section class="view" id="v-workholding">
+    <div class="kicker">High-Density Compact Workholding</div>
+    <h2>Built for 5-axis, 4th-axis &amp; automated workcells</h2>
+    <p class="lead">Workholding designed and curated for CNC machines and automated workcells. Sized for 5-axis clearance so you load more parts per setup and run longer unattended.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/red-tombstone.jpg" alt=""></div>
+        <div class="body"><h3>Multi-Vise Tombstones</h3><p>Compact vises on a hex tombstone: four parts per pallet with full 5-axis access to each one.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/tombstone-clamps.jpg" alt=""></div>
+        <div class="body"><h3>Custom Tombstones</h3><p>Tombstones built around your parts, loading every face to get the most spindle time out of each cycle.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/8up-plate.jpg" alt=""></div>
+        <div class="body"><h3>Multi-Part Quick-Change Fixture Plates</h3><p>Built on our manual quick-change pallet base. Perfect for 3-axis machines and 4th-axis trunnions, and an affordable way to get into high-density quick-change workholding.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/custom-jaws.jpg" alt="GeigerTec compact double vise"></div>
+        <div class="body"><h3>Compact Double Vise</h3><p>Our own double vise, designed specifically for automation. Ideal for second and third ops, with quick setups.</p></div>
+      </div>
+    </div>
+    <div class="kicker" style="margin-top:34px">Proven in Our Own Workcell</div>
+    <h3 style="font-size:32px;margin-top:6px">We don't just design workholding, we run it.</h3>
+    <p class="lead">Every solution runs lights-out in our own automated production, shift after shift, before it ever reaches your shop.</p>
+    <div class="auto">
+      <div class="frame"><img class="photo" src="img/umc500ss-cell.jpg" alt="5-axis automated workcell" style="object-position:35% 75%"></div>
+      <div class="frame">
+        <video src="img/robot.mp4" poster="img/robot.jpg" autoplay muted loop playsinline preload="auto"></video>
+        <span class="live">Automated</span>
+      </div>
+      <div class="col">
+        <div class="frame"><img class="photo" src="img/pallet-pool.jpg" alt=""></div>
+        <div class="frame"><img class="photo" src="img/tombstone-loadstation.jpg" alt=""></div>
+      </div>
+    </div>
+    <div class="kicker" style="margin-top:34px">Our Work in Action</div>
+    <div class="vids">
+      <div class="frame"><video src="img/trunnion-1.mp4" poster="img/trunnion-1.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="frame"><video src="img/4th-axis.mp4" poster="img/4th-axis.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="frame"><video src="img/coolant-cut.mp4" poster="img/coolant-cut.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="frame"><video src="img/home-cut.mp4" poster="img/home-cut.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="frame"><video src="img/pool-load.mp4" poster="img/pool-load.jpg" autoplay muted loop playsinline preload="auto"></video></div>
+    </div>
+    <div class="strip">
+      <div class="frame"><img class="photo" src="img/swingarm-part.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/geigertec-4th-fixture.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/4up-plate.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/geigertec-fixture.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/8up-probe.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/vise-pallet-2.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/4th-axis-setup.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/rotary-fixture.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/tombstones-pool.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/coolant-cut-photo.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/plates-in-machine.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/tombstones-bench.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/lights-out-1.jpg" alt=""></div>
+    </div>
+    <p class="hint">Tap any photo to enlarge.</p>
+  </section>
+
+  <!-- SHOP -->
+  <section class="view" id="v-shop">
+    <div id="shop-list">
+      <div class="kicker">GeigerTec Store</div>
+      <h2>Workholding you can order</h2>
+      <p class="lead">Our standard workholding products are coming to an online store soon. Tap a product to learn more.</p>
+      <div class="shop-grid">
+      <button class="prod" data-prod="dovetail">
+        <div class="art prodimg"><img src="img/prod-dovetail.png" alt="GeigerTec dovetail vise"><span class="soon">Coming soon</span></div>
+        <div class="body"><h3>Dovetail Vises</h3><p>Low-profile dovetail vises that give the spindle full access to five sides of the part in one setup.</p><span class="more">View details →</span></div>
+      </button>
+      <button class="prod" data-prod="tombstone">
+        <div class="art prodimg"><img src="img/prod-tombstone.png" alt="GeigerTec standard tombstone"><span class="soon">Coming soon</span></div>
+        <div class="body"><h3>Standard Tombstones</h3><p>Ready-to-use tombstones for multi-part setups that load more parts per cycle.</p><span class="more">View details →</span></div>
+      </button>
+      <button class="prod" data-prod="pallet">
+        <div class="art prodimg"><img src="img/prod-pallet.png" alt="GeigerTec manual quick-change pallet system"><span class="soon">Coming soon</span></div>
+        <div class="body"><h3>Manual Quick-Change Pallets</h3><p>Swap setups in seconds and keep your work offsets, with no re-indicating.</p><span class="more">View details →</span></div>
+      </button>
+      <button class="prod" data-prod="doublevise">
+        <div class="art prodimg"><img src="img/prod-doublevise.png" alt="GeigerTec compact double vise"><span class="soon">Coming soon</span></div>
+        <div class="body"><h3>Compact Double Vise</h3><p>Our own double vise, designed specifically for automation, second and third ops, and quick setups.</p><span class="more">View details →</span></div>
+      </button>
+      </div>
+      <span class="sample">Store preview · online ordering coming soon</span>
+    </div>
+    <div class="detail" id="d-dovetail">
+      <div>
+        <button class="back" data-back>← All products</button>
+        <div class="art prodimg"><img src="img/prod-dovetail.png" alt="GeigerTec dovetail vise"><span class="soon">Coming soon</span></div>
+        
+      </div>
+      <div>
+        <div class="kicker">GeigerTec Store</div>
+        <h2>Dovetail Vises</h2>
+        <p class="lead">Our dovetail vises grip on a small pre-machined dovetail, so you need less stock, get full 5-axis access and change over fast. Compact enough for automated workcells and pallet systems.</p>
+        <ul class="checks" style="margin-top:14px"><li>Full 5-axis access in one setup</li><li>Minimal grip stock</li><li>Low profile for tool clearance</li><li>Automation and pallet ready</li></ul>
+        <div class="price"><b>Price: TBA</b></div>
+        <button class="btn disabled" style="margin-top:6px">Add to cart · Coming soon</button>
+        <div class="cs-box">
+          <h3>Online store coming soon</h3>
+          <p>Want to be first in line? Email bryan@geigertec.com.</p>
+        </div>
+      </div>
+    </div>
+    <div class="detail" id="d-tombstone">
+      <div>
+        <button class="back" data-back>← All products</button>
+        <div class="art prodimg"><img src="img/prod-tombstone.png" alt="GeigerTec standard tombstone"><span class="soon">Coming soon</span></div>
+        
+      </div>
+      <div>
+        <div class="kicker">GeigerTec Store</div>
+        <h2>Standard Tombstones</h2>
+        <p class="lead">Off-the-shelf tombstones with machine-ready faces you can customize for your own parts. Load multiple parts per setup and get more spindle time out of every cycle.</p>
+        <ul class="checks" style="margin-top:14px"><li>Multiple parts per setup</li><li>Ready to customize</li><li>Fits standard pallets & tables</li><li>More spindle time per cycle</li></ul>
+        <div class="price"><b>Price: TBA</b></div>
+        <button class="btn disabled" style="margin-top:6px">Add to cart · Coming soon</button>
+        <div class="cs-box">
+          <h3>Online store coming soon</h3>
+          <p>Want to be first in line? Email bryan@geigertec.com.</p>
+        </div>
+      </div>
+    </div>
+    <div class="detail" id="d-pallet">
+      <div>
+        <button class="back" data-back>← All products</button>
+        <div class="art prodimg"><img src="img/prod-pallet.png" alt="GeigerTec manual quick-change pallet system"><span class="soon">Coming soon</span></div>
+        
+      </div>
+      <div>
+        <div class="kicker">GeigerTec Store</div>
+        <h2>Manual Quick-Change Pallets</h2>
+        <p class="lead">Manual quick-change pallets with repeatable locating. Prep the next job off the machine, swap it in seconds, and run without re-indicating.</p>
+        <ul class="checks" style="margin-top:14px"><li>Repeatable locating</li><li>Changeovers in seconds</li><li>Set up jobs off the machine</li><li>No re-indicating</li></ul>
+        <div class="price"><b>Price: TBA</b></div>
+        <button class="btn disabled" style="margin-top:6px">Add to cart · Coming soon</button>
+        <div class="cs-box">
+          <h3>Online store coming soon</h3>
+          <p>Want to be first in line? Email bryan@geigertec.com.</p>
+        </div>
+      </div>
+    </div>
+    <div class="detail" id="d-doublevise">
+      <div>
+        <button class="back" data-back>← All products</button>
+        <div class="art prodimg"><img src="img/prod-doublevise.png" alt="GeigerTec compact double vise"><span class="soon">Coming soon</span></div>
+        
+      </div>
+      <div>
+        <div class="kicker">GeigerTec Store</div>
+        <h2>Compact Double Vise</h2>
+        <p class="lead">Our own compact double vise, designed specifically for automation. Two parts per setup in a small footprint, ideal for second and third ops with quick setups.</p>
+        <ul class="checks" style="margin-top:14px"><li>Designed for automation</li><li>Two parts per setup</li><li>Ideal for second &amp; third ops</li><li>Quick setups &amp; changeovers</li></ul>
+        <div class="price"><b>Price: TBA</b></div>
+        <button class="btn disabled" style="margin-top:6px">Add to cart · Coming soon</button>
+        <div class="cs-box">
+          <h3>Online store coming soon</h3>
+          <p>Want to be first in line? Email bryan@geigertec.com.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section class="view" id="v-training">
+    <div class="kicker">CNC Training at Our Shop</div>
+    <h2>Get your team confident on Haas</h2>
+    <p class="lead">Hands-on training on real machines, from your first 3-axis part to lights-out 5-axis production.</p>
+    <div class="pair" style="margin-top:22px">
+      <div class="frame"><img class="photo" src="img/vmc-probing.jpg" alt=""></div>
+      <div class="frame"><img class="photo" src="img/vmc-cutting.jpg" alt=""></div>
+    </div>
+    <div class="split">
+      <div class="box">
+        <h3>What we cover</h3>
+        <ul class="checks">
+          <li>Haas control operation &amp; machine setup</li>
+          <li>Job setup</li>
+          <li>Tool selection &amp; setup</li>
+          <li>Work offsets &amp; probing</li>
+          <li>CAM programming from 3-axis to 3+2</li>
+          <li>Automated workcell &amp; pallet workflow</li>
+          <li>Workholding selection &amp; fixture design</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Who it's for</h3>
+        <ul class="checks">
+          <li>New operators &amp; apprentices</li>
+          <li>Machinists moving up to 5-axis</li>
+          <li>Shops that just bought a new Haas</li>
+          <li>Teams adding automation</li>
+        </ul>
+        <button class="btn" data-go="contact">Book training →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSULTING -->
+  <section class="view" id="v-consulting">
+    <div class="kicker">On-Site Consulting</div>
+    <h2>We come to your shop floor</h2>
+    <p class="lead">Practical, hands-on help at your own machines, with your parts and your people.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/umc500ss-cell.jpg" alt="" style="object-position:30% 40%"></div>
+        <div class="body"><h3>Machine Familiarization</h3><p>Get new Haas machines making parts fast. We walk your team through setup, controls and best practices.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic" style="background:#fff"><img class="photo" src="img/cam-toolpaths.jpg" alt="CAM toolpaths" style="background:#fff"></div>
+        <div class="body"><h3>Programming Support</h3><p>CAM strategy, posts, cycle-time cuts and proving out new 5-axis programs.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/4th-axis-setup.jpg" alt=""></div>
+        <div class="body"><h3>Specialized Workholding</h3><p>We look at your parts and recommend, or design, the fixturing that gets the most out of every setup.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/lights-out-2.jpg" alt="Shop running lights-out" style="object-position:50% 45%"></div>
+        <div class="body"><h3>Automation Readiness</h3><p>Planning an automated workcell? We help with process, fixturing and pallet strategy before you go lights-out.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic"><img class="photo" src="img/tool-library.jpg" alt="Tool library"></div>
+        <div class="body"><h3>Tool Libraries &amp; Selection</h3><p>We build organized tool libraries and help you choose the right tools, so programming is faster and results are consistent.</p></div>
+      </div>
+      <div class="card">
+        <div class="pic" style="background:#fff"><img class="photo" src="img/setup-sheet.jpg" alt="Example setup sheet" style="object-fit:contain;background:#fff;padding:8px"></div>
+        <div class="body"><h3>Job Documentation</h3><p>Setup sheets, tool lists and process documents that make every job repeatable, no matter who is running the machine.</p></div>
+      </div>
+    </div>
+    <button class="btn" data-go="contact">Talk to us →</button>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="view" id="v-contact">
+    <div class="kicker">Let's Talk</div>
+    <h2>Ready to step up your machining?</h2>
+    <p class="lead">Whether it's high-density workholding, hands-on training or on-site support, we'll help you get more out of every machine and every shift. Let's talk.</p>
+    <div class="contact">
+      <div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <div><small>Email</small>bryan@geigertec.com</div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+          <div><small>Web</small>geigerteccnc.com</div>
+        </div>
+      </div>
+      <div class="frame" style="aspect-ratio:4/3"><img class="photo" src="img/geigertec-4th-fixture.jpg" alt="GeigerTec fixture"></div>
+    </div>
+    <p class="foot">Haas is a trademark of Haas Automation, Inc. GeigerTec Machine Solutions is an independent provider and not affiliated with Haas Automation.</p>
+  </section>
+
+  <div class="progress" id="prog"></div>
+</main>
+
+<nav id="nav">
+  <button class="tab on" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7v9H3z"/></svg>Home</button>
+  <button class="tab" data-go="workholding"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="14" width="18" height="6" rx="1"/><rect x="5" y="8" width="5" height="6"/><rect x="14" y="8" width="5" height="6"/></svg>Workholding</button>
+  <button class="tab" data-go="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>Shop</button>
+  <button class="tab" data-go="training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9 12 4l10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg>Training</button>
+  <button class="tab" data-go="consulting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M16 4a4 4 0 0 1 0 8M22 21c0-3-2-5-4-6"/></svg>Consulting</button>
+  <button class="tab" data-go="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4z"/></svg>Contact</button>
+</nav>
+
+<div id="lb"><button class="x" aria-label="Close">×</button><img alt=""></div>
+
+<script>
+(function(){
+  var order=["home","workholding","shop","training","consulting","contact"];
+  var cur="home", idleTimer, cycleTimer;
+  var IDLE=45000, SLIDE=12000; // attract loop starts after 45s idle; 12s per screen
+  var prog=document.getElementById("prog");
+  var lb=document.getElementById("lb"), lbImg=lb.querySelector("img");
+
+  function playVisible(){
+    document.querySelectorAll("video").forEach(function(v){
+      var on=v.closest(".view").classList.contains("on");
+      try{ if(on){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); } else v.pause(); }catch(e){}
+    });
+  }
+  function show(name){
+    if(order.indexOf(name)<0) name="home";
+    cur=name;
+    order.forEach(function(n){ document.getElementById("v-"+n).classList.toggle("on",n===name); });
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("on",t.dataset.go===name)});
+    document.getElementById("v-"+name).scrollTop=0;
+    if(name!=="shop"||!arguments[1]) try{showProd(null)}catch(e){}
+    playVisible();
+  }
+  function showProd(k){
+    document.getElementById("shop-list").style.display=k?"none":"";
+    document.querySelectorAll(".detail").forEach(function(d){d.classList.toggle("on",d.id==="d-"+k)});
+    document.getElementById("v-shop").scrollTop=0;
+  }
+  document.addEventListener("click",function(e){
+    var p=e.target.closest("[data-prod]"); if(p){ showProd(p.dataset.prod); return; }
+    if(e.target.closest("[data-back]")) showProd(null);
+  });
+  function stopAttract(){ clearTimeout(cycleTimer); prog.style.transition="none"; prog.style.width="0"; }
+  function nextSlide(){
+    lb.classList.remove("on");
+    show(order[(order.indexOf(cur)+1)%order.length]);
+    prog.style.transition="none"; prog.style.width="0"; void prog.offsetWidth;
+    prog.style.transition="width "+SLIDE+"ms linear"; prog.style.width="100%";
+    cycleTimer=setTimeout(nextSlide,SLIDE);
+  }
+  function startAttract(){ cur=order[order.length-1]; nextSlide(); }
+  function touched(){ stopAttract(); clearTimeout(idleTimer); idleTimer=setTimeout(startAttract,IDLE); }
+
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-go]");
+    if(b){ show(b.dataset.go); return; }
+    var p=e.target.closest("img.photo");
+    if(p){ lbImg.src=p.src; lb.classList.add("on"); return; }
+    if(lb.classList.contains("on")) lb.classList.remove("on");
+  });
+  ["pointerdown","touchstart","keydown","wheel"].forEach(function(ev){
+    document.addEventListener(ev,touched,{passive:true});
+  });
+  // Double-tap the logo for fullscreen (where the browser allows it)
+  document.querySelector(".brand").addEventListener("dblclick",function(){
+    try{ var el=document.documentElement; var r=(el.requestFullscreen||el.webkitRequestFullscreen).call(el); if(r&&r.catch)r.catch(function(){}); }catch(e){}
+  });
+  touched(); playVisible();
+})();
+</script>
+</body>
+</html>
