@@ -527,7 +527,9 @@
     cycleTimer=setTimeout(nextSlide,SLIDE);
   }
   function startAttract(){ cur=order[order.length-1]; nextSlide(); }
-  function touched(){ stopAttract(); clearTimeout(idleTimer); idleTimer=setTimeout(startAttract,IDLE); }
+  // Auto-cycling ("booth mode") only runs when the address ends in #booth
+  var BOOTH=(location.hash==="#booth");
+  function touched(){ stopAttract(); clearTimeout(idleTimer); if(BOOTH) idleTimer=setTimeout(startAttract,IDLE); }
 
   document.addEventListener("click",function(e){
     var b=e.target.closest("[data-go]");
