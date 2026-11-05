@@ -194,8 +194,10 @@
     .stat b{font-size:20px}
     .btn{font-size:19px;padding:13px 20px;margin-top:16px}
     .btn.ghost{margin-left:8px}
-    .hero-media{height:auto;grid-template-columns:1fr 1fr;grid-auto-rows:200px}
-    .hero-media .frame:first-child{grid-row:span 2}
+    .hero{min-height:auto !important;align-items:start;gap:22px}
+    .hero-media{height:auto !important;grid-template-columns:1fr !important;grid-auto-rows:auto;gap:14px;margin-top:8px}
+    .hero-media .frame{aspect-ratio:4/3}
+    .hero-media .frame:first-child{grid-row:auto;aspect-ratio:4/5}
     .shop-grid{grid-template-columns:1fr !important}
     #v-consulting .grid{grid-template-columns:1fr !important}
     .grid{grid-template-columns:1fr}
