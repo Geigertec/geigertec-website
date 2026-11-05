@@ -158,6 +158,58 @@
   .qrbox img{width:170px;height:170px;border-radius:8px;background:#fff;padding:6px;flex:none}
   .qrbox b{display:block;font-family:"Barlow Condensed",sans-serif;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
   .qrbox span{display:block;color:var(--muted);font-size:16px;margin-top:4px}
+
+  /* ===== Desktop / PC layout (mouse + wide screen) ===== */
+  @media (min-width:1200px) and (hover:hover) and (pointer:fine){
+    header{order:0;padding:14px max(32px,calc((100vw - 1320px)/2))}
+    nav{order:1;display:flex;justify-content:center;gap:6px;border-top:0;border-bottom:1px solid var(--line);background:#0d0d0d;padding:0 20px}
+    main{order:2}
+    .tab{flex-direction:row;font-size:19px;padding:14px 22px;gap:8px;border-radius:0}
+    .tab svg{width:20px;height:20px}
+    .tab:hover{color:var(--text)}
+    .tab.on::before{top:auto;bottom:0;left:14px;right:14px;height:3px;border-radius:3px 3px 0 0}
+    .view{padding:44px max(40px,calc((100vw - 1320px)/2)) 60px}
+    .strip{grid-template-columns:repeat(3,1fr)}
+    .strip .frame{aspect-ratio:4/3}
+    .hero{min-height:auto;padding-top:20px}
+    .hero-media{height:min(62vh,640px)}
+    .btn:hover{filter:brightness(1.1)}
+    .prod:hover{transform:translateY(-3px)}
+    .card .photo,.frame .photo{transition:transform .35s}
+    .card:hover .photo,.frame:hover .photo{transform:scale(1.03)}
+  }
+
+  /* ===== Phone layout ===== */
+  @media (max-width:640px){
+    .view{padding:20px 16px 28px;overflow-x:hidden}
+    .hero>*,.split>*,.contact>*{min-width:0}
+    header{padding:8px 14px}
+    .brand img{height:42px}
+    .dname{font-size:15px;line-height:1.1}
+    .welcome{font-size:15px}
+    h1{font-size:34px}
+    h2{font-size:30px}
+    .lead{font-size:17px}
+    .stats{grid-template-columns:1fr;justify-content:stretch}
+    .stat b{font-size:20px}
+    .btn{font-size:19px;padding:13px 20px;margin-top:16px}
+    .btn.ghost{margin-left:8px}
+    .hero-media{height:auto;grid-template-columns:1fr 1fr;grid-auto-rows:200px}
+    .hero-media .frame:first-child{grid-row:span 2}
+    .shop-grid{grid-template-columns:1fr !important}
+    #v-consulting .grid{grid-template-columns:1fr !important}
+    .grid{grid-template-columns:1fr}
+    .pair{grid-template-columns:1fr}
+    .strip{grid-template-columns:1fr 1fr}
+    .vids{grid-template-columns:1fr 1fr}
+    .qrbox{flex-direction:column;text-align:center}
+    nav{grid-template-columns:repeat(6,1fr)}
+    nav{overflow:hidden}
+    .tab{font-size:9px !important;letter-spacing:-.2px;padding:10px 0 12px;gap:3px;min-width:0;overflow:hidden;white-space:nowrap}
+    .tab svg{width:22px !important;height:22px !important}
+    .tab svg{width:22px;height:22px}
+    .detail.on{gap:18px}
+  }
   /* lightbox */
   #lb{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;z-index:50;padding:30px}
   #lb.on{display:flex}
